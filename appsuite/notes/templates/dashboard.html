@@ -1,3 +1,13 @@
 <h2>Dashboard! {{user}}</h2>
 <br>
 <a href="/notes/logout/">Logout</a>
+<br>
+<table>
+	<tr>
+    <td>
+      <form name="noteForm" action="/notes/dashboard/" method="post">{% csrf_token %}
+        {{form.as_p}}
+      <input type="submit" value="New Note">
+    </td>
+  </tr>
+</table>
