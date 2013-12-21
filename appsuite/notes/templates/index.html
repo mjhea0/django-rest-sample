@@ -1,0 +1,9 @@
+<h3>Hello, {{username}}.</h3>
+
+<form name="loginForm" action="notes/index/" method="post">{% csrf_token %}
+	{{form.as_p}}
+	<input type="submit">
+<!-- 	{% for field, errors in form.erros.items %}
+		{{ errors }}
+	{% endfor %} -->
+</form>
