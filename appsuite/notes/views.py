@@ -16,7 +16,7 @@ class LoginForm(forms.Form):
 
 @login_required(login_url="/notes/index/")		
 def dashboard(request):
-	NoteFormSet=inlineformset_factory(User,Note,can_delete=True,extra=1)
+	NoteFormSet=inlineformset_factory(User,Note,can_delete=True,extra=1,form=NoteForm)
 	if request.method=="POST":
 		formset=NoteFormSet(request.POST,request.FILES,instance=request.user)
 		if formset.is_valid():

@@ -1,24 +1,30 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h2>Dashboard! {{user}}</h2>
-<br>
+<h2>Welcome, {{user}}</h2>
 <a href="/notes/logout/">Logout</a>
+<br>
 <br>
 <table>
   <tr>
     <td>
-      <form name="notesUpdateForm" action="/notes/dashboard/" method="post">{% csrf_token %}
+      <form role="form" name="notesUpdateForm" action="/notes/dashboard/" method="post">{% csrf_token %}
         {{formset.management_form}}
           {% for form in formset %}
           {{form.id}}
-          {{form.title}}
-          {{form.text}}
-          {{form.createTime}}
-          {{form.DETELE}}
+          <strong>Title:</strong><br> {{form.title}}
+          <br>
+          <br>
+          <strong>Text:</strong><br> {{form.text}}
+          <br>
+          <strong>Date:</strong><br> {{form.createTime}}
         	<br>
+          <hr>
+          <br>
         {% endfor %}
-      <input type="submit" value="Update">
+      <button type="submit" class="btn btn-default">Update</button>
+      <br>
+      <br>
     </td>
   </tr>
 </table>

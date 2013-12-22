@@ -1,11 +1,14 @@
 {% extends "base.html" %}
 {% block content %}
 
-<h3>Hello, {{username}}.</h3>
-
+<h3>Hello. Please login.</h3>
+<br>
 <form name="loginForm" action="notes/index/" method="post">{% csrf_token %}
   {{form.as_p}}
-  <input type="submit">
+  <button type="submit" class="btn btn-default">Submit</button>
+  <br>
+  <br>
+  <p>Use "test" for both fields.</p>
   <!-- 	{% for field, errors in form.erros.items %}
     {{ errors }}
   {% endfor %} -->

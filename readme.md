@@ -1,4 +1,4 @@
-# django-rest-sample
+# django-REST-sample
 
 just a simple sample example.
 

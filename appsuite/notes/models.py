@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.forms import ModelForm
 from tastypie.authorization import Authorization
 from tastypie.resources import ModelResource
+from django import forms
 
 class Note(models.Model):
   owner = models.ForeignKey(User)
@@ -11,11 +12,14 @@ class Note(models.Model):
   createTime = models.DateTimeField()
 
 
-class NoteForm(ModelForm):
+class NoteForm(forms.ModelForm):
     class Meta:
         model = Note
         # fields=["title","text","createTime"]
         exclude=["owner"]
+        widgets = {
+          'text': forms.Textarea(attrs={'cols':60,'rows':10, 'class':'form-control'}),
+        }
 
 class NoteResources(ModelResource):
     class Meta:
