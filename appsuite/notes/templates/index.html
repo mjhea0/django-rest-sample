@@ -1,3 +1,6 @@
+{% extends "base.html" %}
+{% block content %}
+
 <h3>Hello, {{username}}.</h3>
 
 <form name="loginForm" action="notes/index/" method="post">{% csrf_token %}
@@ -7,3 +10,5 @@
     {{ errors }}
   {% endfor %} -->
 </form>
+
+{% endblock %}
