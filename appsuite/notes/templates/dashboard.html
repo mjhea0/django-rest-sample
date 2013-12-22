@@ -3,11 +3,19 @@
 <a href="/notes/logout/">Logout</a>
 <br>
 <table>
-	<tr>
+  <tr>
     <td>
-      <form name="noteForm" action="/notes/dashboard/" method="post">{% csrf_token %}
-        {{form.as_p}}
-      <input type="submit" value="New Note">
+      <form name="notesUpdateForm" action="/notes/dashboard/" method="post">{% csrf_token %}
+        {{formset.management_form}}
+          {% for form in formset %}
+          {{form.id}}
+          {{form.title}}
+          {{form.text}}
+          {{form.createTime}}
+          {{form.DETELE}}
+        	<br>
+        {% endfor %}
+      <input type="submit" value="Update">
     </td>
   </tr>
 </table>

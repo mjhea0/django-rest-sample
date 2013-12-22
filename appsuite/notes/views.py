@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, render_to_response
 from django.http import HttpResponse
 from django.template import loader, RequestContext
 from django import forms
@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
 from models import Note, NoteForm
+from django.forms.models import inlineformset_factory
 
 
 class LoginForm(forms.Form):
@@ -15,23 +16,16 @@ class LoginForm(forms.Form):
 
 @login_required(login_url="/notes/index/")		
 def dashboard(request):
+	NoteFormSet=inlineformset_factory(User,Note,can_delete=True,extra=1)
 	if request.method=="POST":
-		d=request.POST.copy()
-		d.update({'owner':request.user.id})
-		form = NoteForm(d)
-		if not form.is_valid():
-			template=loader.get_template("dashboard.html")
-			rc=RequestContext(request,{'form':NoteForm()})
-			return HttpResponse(template.render(rc))	
-		# save note to database
-		note = form.save(commit=False)
-		note.owner=request.user
-		note.save()
+		formset=NoteFormSet(request.POST,request.FILES,instance=request.user)
+		if formset.is_valid():
+			formset.save()
 		return redirect("dashboard")
 	else:
-		template=loader.get_template("dashboard.html")
-		rc=RequestContext(request,{'form':NoteForm()})
-		return HttpResponse(template.render(rc))
+		formset=NoteFormSet(instance=request.user)
+		return render_to_response("dashboard.html",
+			{'form':NoteForm(),'formset':formset},RequestContext(request))
 
 def index(request):
 	#return HttpResponse("Hello, Notes")
